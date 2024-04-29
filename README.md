@@ -23,3 +23,7 @@ https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-rootfs-amd64.squa
 https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-amd64.sha512
 https://releases.rancher.com/harvester/v1.2.1/version.yaml
 
+
+## Image URL
+https://registry.terraform.io/providers/harvester/harvester/latest/docs/resources/image
+
