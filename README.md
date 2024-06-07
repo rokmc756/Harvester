@@ -38,23 +38,9 @@ Harvester is an enterprise-ready, easy-to-use infrastructure platform that lever
 - Network management. Supports using a virtual IP (VIP) and multiple Network Interface Cards (NICs). If your VMs need to connect to the external network, create a VLAN or untagged network.
 - Integration with Rancher. Access Harvester directly within Rancher through Rancher’s Virtualization Management page and manage your VM workloads alongside your Kubernetes clusters.
 
-
-## Harvester Cluster Network Diagram
-- In Harvester v1.1.0, we introduced a new concept called cluster network for traffic isolation.
-- The following diagram describes a typical network architecture that separates data-center (DC) traffic from out-of-band (OOB) traffic.
-
-![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-traffic-isolation.png)
-- We abstract the sum of devices, links, and configurations on a traffic-isolated forwarding path on Harvester as a cluster network.
-- In the above case, there will be two cluster networks corresponding to two traffic-isolated forwarding paths.
-
-### Network Configuration
-- Specifications including network devices of the Harvester hosts can be different. To be compatible with such a heterogeneous cluster, we designed the network configuration.
-- Network configuration only works under a certain cluster network. Each network configuration corresponds to a set of hosts with uniform network specifications. Therefore, multiple network configurations are required for a cluster network on non-uniform hosts.
-
-### VM Network
-- A VM network is an interface in a virtual machine that connects to the host network. As with a network configuration, every network except the built-in management network must be under a cluster network.
-- Harvester supports adding multiple networks to one VM. If a network's cluster network is not enabled on some hosts, the VM that owns this network will not be scheduled to those hosts.
-
+## Harvester Dashboard
+Harvester provides a powerful and easy-to-use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from the node's terminal.
+<iframe width="99%" height="450" src="https://www.youtube.com/embed/Ngsk7m6NYf4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
 
 ## Relationship Between Harvester Cluster Network, Network Config, VM Network
