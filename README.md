@@ -27,6 +27,26 @@ shifts toward containers, edge and multi-cloud software engineering.
 
 ## Relationship Between Harvester Cluster Network, Network Config, VM Network
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-relation.png)
+- All Network Configs and VM Networks are grouped under a cluster network.
+
+- A label can be assigned to each host to categorize hosts based on their network specifications.
+- A network config can be added for each group of hosts using a node selector.
+- For example, in the diagram above, the hosts in ClusterNetwork-A are divided into three groups as follows:
+~~~
+The first group includes host0, which corresponds to network-config-A.
+The second group includes host1 and host2, which correspond to network-config-B.
+The third group includes the remaining hosts (host3, host4, and host5), which do not have any related network config and therefore do not belong to ClusterNetwork-A.
+The cluster network is only effective on hosts that are covered by the network configuration. A VM using a VM network under a specific cluster network can only be scheduled on a host where the cluster network is active.
+~~~
+
+- In the diagram above, we can see that:
+~~~
+ClusterNetwork-A is active on host0, host1, and host2. VM0 uses VM-network-A, so it can be scheduled on any of these hosts.
+VM1 uses both VM-network-B and VM-network-C, so it can only be scheduled on host2 where both ClusterNetwork-A and ClusterNetwork-B are active.
+VM0, VM1, and VM2 cannot run on host3 where the two cluster networks are inactive.
+Overall, this diagram provides a clear visualization of the relationship between cluster networks, network configurations, and VM networks, as well as how they impact VM scheduling on hosts.
+~~~
+
 
 ## Harvester Network Deep Dive
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-topology.png)
