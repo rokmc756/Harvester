@@ -40,18 +40,8 @@ Harvester is an enterprise-ready, easy-to-use infrastructure platform that lever
 
 ## Harvester Dashboard
 Harvester provides a powerful and easy-to-use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from the node's terminal.\
-{% include video id="Ngsk7m6NYf4" provider="youtube" %}
+<iframe width="956" height="538" src="https://www.youtube.com/embed/znDh1Ujateo45Z3w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<html>
-<div align="center">
-    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Ngsk7m6NYf4" title="YouTube video player" frameborder="0" frameborder="0">
-   </iframe>
-</div>
-</html>
-
-// frameborder="0" allowfullscreen></iframe><br/>
-// allowfullscreen></iframe><br/>
-// allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
 
 ## Relationship Between Harvester Cluster Network, Network Config, VM Network
