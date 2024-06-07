@@ -20,17 +20,15 @@ shifts toward containers, edge and multi-cloud software engineering.
 
 
 ## Harvester Architecture
-
-## Architecture
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-arch-update-grey.png)
 
-### Cluster Network Diagram
+## Harvester Cluster Network Diagram
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-traffic-isolation.png)
 
-### Relationship Between Cluster Network, Network Config, VM Network
+## Relationship Between Harvester Cluster Network, Network Config, VM Network
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-relation.png)
 
-### Harvester Network Deep Dive
+## Harvester Network Deep Dive
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-topology.png)
 
 
