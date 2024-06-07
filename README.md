@@ -21,25 +21,27 @@ shifts toward containers, edge and multi-cloud software engineering.
 
 ## Harvester Architecture
 ### The Harvester architecture consists of cutting-edge open-source technologies:
-- Linux OS. Elemental for SLE-Micro 5.3 is at the core of Harvester and is an immutable Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster.
-- Built on top of Kubernetes. Kubernetes has become the predominant infrastructure language across all form factors, and Harvester is an HCI solution with Kubernetes under the hood.
-- Virtualization management with KubeVirt. KubeVirt provides virtualization management using KVM on top of Kubernetes.
-- Storage management with Longhorn. Longhorn provides distributed block storage and tiering.
-- Observability with Grafana and Prometheus. Grafana and Prometheus provide robust monitoring and logging.
+- **Linux OS.** Elemental for SLE-Micro 5.3 is at the core of Harvester and is an immutable Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster.
+- **Built on top of Kubernetes.** Kubernetes has become the predominant infrastructure language across all form factors, and Harvester is an HCI solution with Kubernetes under the hood.
+- **Virtualization management with KubeVirt.** KubeVirt provides virtualization management using KVM on top of Kubernetes.
+- **Storage management with Longhorn.** Longhorn provides distributed block storage and tiering.
+- **Observability with Grafana and Prometheus.** Grafana and Prometheus provide robust monitoring and logging.
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-architecture.svg)
 
 ## Harvester Features
 Harvester is an enterprise-ready, easy-to-use infrastructure platform that leverages local, direct attached storage instead of complex external SANs. It utilizes Kubernetes API as a unified automation language across container and VM workloads. Some key features of Harvester include:
-- Easy to get started. Since Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the ISO image or automatically install it using iPXE scripts.
-- VM lifecycle management. Easily create, edit, clone, and delete VMs, including SSH-Key injection, cloud-init, and graphic and serial port console.
-- VM live migration. Move a VM to a different host or node with zero downtime.
-- VM backup, snapshot, and restore. Back up your VMs from NFS, S3 servers, or NAS devices. Use your backup to restore a failed VM or create a new VM on a different cluster.
-- Storage management. Harvester supports distributed block storage and tiering. Volumes represent storage; you can easily create, edit, clone, or export a volume.
-- Network management. Supports using a virtual IP (VIP) and multiple Network Interface Cards (NICs). If your VMs need to connect to the external network, create a VLAN or untagged network.
-- Integration with Rancher. Access Harvester directly within Rancher through Rancher’s Virtualization Management page and manage your VM workloads alongside your Kubernetes clusters.
+- **Easy to get started.** Since Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the ISO image or automatically install it using iPXE scripts.
+- **VM lifecycle management.**  Easily create, edit, clone, and delete VMs, including SSH-Key injection, cloud-init, and graphic and serial port console.
+- **VM live migration.** Move a VM to a different host or node with zero downtime.
+- **VM backup, snapshot, and restore.** Back up your VMs from NFS, S3 servers, or NAS devices. Use your backup to restore a failed VM or create a new VM on a different cluster.
+- **Storage management.** Harvester supports distributed block storage and tiering. Volumes represent storage; you can easily create, edit, clone, or export a volume.
+- **Network management.** Supports using a virtual IP (VIP) and multiple Network Interface Cards (NICs). If your VMs need to connect to the external network, create a VLAN or untagged network.
+- **Integration with Rancher.** Access Harvester directly within Rancher through Rancher’s Virtualization Management page and manage your VM workloads alongside your Kubernetes clusters.
 
 ## Harvester Dashboard
-Harvester provides a powerful and easy-to-use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from the node's terminal.\
+Harvester provides a powerful and easy-to-use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from the node's terminal.
+
+
 <iframe width="956" height="538" src="https://www.youtube.com/embed/znDh1Ujateo45Z3w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
