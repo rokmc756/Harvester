@@ -23,7 +23,22 @@ shifts toward containers, edge and multi-cloud software engineering.
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-arch-update-grey.png)
 
 ## Harvester Cluster Network Diagram
+- In Harvester v1.1.0, we introduced a new concept called cluster network for traffic isolation.
+- The following diagram describes a typical network architecture that separates data-center (DC) traffic from out-of-band (OOB) traffic.
+
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-traffic-isolation.png)
+- We abstract the sum of devices, links, and configurations on a traffic-isolated forwarding path on Harvester as a cluster network.
+- In the above case, there will be two cluster networks corresponding to two traffic-isolated forwarding paths.
+
+### Network Configuration
+- Specifications including network devices of the Harvester hosts can be different. To be compatible with such a heterogeneous cluster, we designed the network configuration.
+- Network configuration only works under a certain cluster network. Each network configuration corresponds to a set of hosts with uniform network specifications. Therefore, multiple network configurations are required for a cluster network on non-uniform hosts.
+
+### VM Network
+- A VM network is an interface in a virtual machine that connects to the host network. As with a network configuration, every network except the built-in management network must be under a cluster network.
+- Harvester supports adding multiple networks to one VM. If a network's cluster network is not enabled on some hosts, the VM that owns this network will not be scheduled to those hosts.
+
+
 
 ## Relationship Between Harvester Cluster Network, Network Config, VM Network
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-relation.png)
