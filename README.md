@@ -1,3 +1,35 @@
+## What is Harvester?
+Harvester is a modern hyperconverged infrastructure (HCI) solution built for bare metal servers using enterprise-grade open-source technologies
+including Linux, KVM, Kubernetes, KubeVirt, and Longhorn. Designed for users looking for a flexible and affordable solution to run cloud-native
+and virtual machine (VM) workloads in your datacenter and at the edge, Harvester provides a single pane of glass for virtualization and cloud-
+native workload management.
+
+
+## Why Harvester?
+### Sits on the shoulders of cloud native giants
+Harvester uses proven and mature open source software (OSS) components to build virtualization instead
+of proprietary kernels that are kept hidden from view.
+
+### Lower Total Cost of Ownership (TCO)
+As 100% open source, Harvester is free from the costly license fees of other HCI solutions.
+Plus, its foundation is based on existing technology such as Linux and kernel-based virtual machines.
+
+### Integrate and prepare for the future
+Built with cloud native components at its core, Harvester is future-proof as the infrastructure industry
+shifts toward containers, edge and multi-cloud software engineering.
+
+
+## Harvester Architecture
+
+
+![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-arch-update-grey.png)
+
+![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-relation.png)
+
+![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-topology.png)
+
+![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-traffic-isolation.png)
+
 
 
 ## PXE Boot and Configuraion
