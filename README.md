@@ -39,7 +39,7 @@ Harvester is an enterprise-ready, easy-to-use infrastructure platform that lever
 - Integration with Rancher. Access Harvester directly within Rancher through Rancher’s Virtualization Management page and manage your VM workloads alongside your Kubernetes clusters.
 
 ## Harvester Dashboard
-Harvester provides a powerful and easy-to-use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from the node's terminal.
+Harvester provides a powerful and easy-to-use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from the node's terminal.\
 {% include video id="Ngsk7m6NYf4" provider="youtube" %}
 
 <html>
