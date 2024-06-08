@@ -42,9 +42,6 @@ Harvester is an enterprise-ready, easy-to-use infrastructure platform that lever
 Harvester provides a powerful and easy-to-use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from the node's terminal.
 
 
-<iframe width="956" height="538" src="https://www.youtube.com/embed/znDh1Ujateo45Z3w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-
 
 ## Relationship Between Harvester Cluster Network, Network Config, VM Network
 ![alt text](https://github.com/rokmc756/Harvester/blob/main/roles/harvester/files/harvester-relation.png)
@@ -133,31 +130,24 @@ mode 6(balance-alb)	none
 - If you want VMs in a VLAN to be able to obtain IP addresses through the DHCP protocol, configure an IP pool for that VLAN in the DHCP server.
 
 
+## Reference Links
+### PXE Boot and Configuraion
+- https://www.suse.com/c/rancher_blog/harvester-intro-and-setup/
+- https://github.com/harvester/harvester-installer
+- https://docs.harvesterhci.io/v1.2/install/pxe-boot-install/
+- https://docs.harvesterhci.io/v1.1/install/harvester-configuration/
 
-## PXE Boot and Configuraion
+### Hosted (Nested) VM
+- https://kb.vmware.com/s/article/1008443
+- https://www.server-world.info/en/note?os=ESXi_8&p=vm&f=4
 
-https://www.suse.com/c/rancher_blog/harvester-intro-and-setup/
-https://github.com/harvester/harvester-installer
-https://docs.harvesterhci.io/v1.2/install/pxe-boot-install/
-https://docs.harvesterhci.io/v1.1/install/harvester-configuration/
+### ESXi USB Keyboard (HID) Passthrough
+- https://www.youtube.com/watch?v=-obzzQzfmHA
+- https://williamlam.com/2020/05/how-to-passthrough-usb-keyboard-mouse-hid-and-ccid-devices-to-vm-in-esxi.html
 
-## Hosted (Nested) VM
-https://kb.vmware.com/s/article/1008443
-https://www.server-world.info/en/note?os=ESXi_8&p=vm&f=4
+### Download URL
+- https://releases.rancher.com/harvester/v1.2.1/
 
-## ESXi USB Keyboard (HID) Passthrough
-* https://www.youtube.com/watch?v=-obzzQzfmHA
-* https://williamlam.com/2020/05/how-to-passthrough-usb-keyboard-mouse-hid-and-ccid-devices-to-vm-in-esxi.html
-
-## Download URL
-https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-amd64.iso
-https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-vmlinuz-amd64
-https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-initrd-amd64
-https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-rootfs-amd64.squashfs
-https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-amd64.sha512
-https://releases.rancher.com/harvester/v1.2.1/version.yaml
-
-
-## Image URL
-https://registry.terraform.io/providers/harvester/harvester/latest/docs/resources/image
+### Image URL
+- https://registry.terraform.io/providers/harvester/harvester/latest/docs/resources/image
 
