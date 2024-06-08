@@ -1,5 +1,5 @@
-## How to deploy Harvester HCI by PXE Boot
-[Deploy Harvester by PXE Boot](https://github.com/rokmc756/Harvester/blob/main/PXE-BOOT.md)
+## How to install Harvester HCI Solution
+[Deploy Harvester Mater and Workers by PXE Boot](https://github.com/rokmc756/Harvester/blob/main/PXE-BOOT.md)
 
 ## What is Harvester?
 Harvester is a modern hyperconverged infrastructure (HCI) solution built for bare metal servers using enterprise-grade open-source technologies
