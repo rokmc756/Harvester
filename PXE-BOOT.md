@@ -1,25 +1,23 @@
-??? from here until ???END lines may have been inserted/deleted
-
-
-How to configure TFTP, FTP, PXE Server for Weka Kickstart installation
-
-
+## How to configure TFTP, FTP, PXE boot for Harvester HCI Network Installation in VMware 8.x
+### Environment
+~~~
 OS : Rocky Linux 9.x
-IP : 192.168.0.199
-
-
-
-[ TFTP Server ]
-~~~
-[root@freeipa ~]# dnf install -y tftp-server tftp
-[root@freeipa ~]# vi /usr/lib/systemd/system/tftp.service /etc/systemd/system/tftp-server.service
-[root@freeipa ~]# vi /usr/lib/systemd/system/tftp.socket /etc/systemd/system/tftp-server.socket
+IP : 192.168.0.90
 ~~~
 
 
-
-[root@freeipa ~]# vi /etc/systemd/system/tftp-server.service
+### Install and Configure TFTP Server
+- Package Installation and Enable Services
 ~~~
+$ dnf install -y tftp-server tftp
+$ cp /usr/lib/systemd/system/tftp.service /etc/systemd/system/tftp-server.service
+$ cp /usr/lib/systemd/system/tftp.socket /etc/systemd/system/tftp-server.socket
+~~~
+
+- Configure Systemd Service
+~~~
+$ vi /etc/systemd/system/tftp-server.service
+
 [Unit]
 Description=Tftp Server
 # Requires=tftp.socket
@@ -35,10 +33,9 @@ WantedBy=multi-user.target
 Also=tftp.socket
 ~~~
 
-
-
+- Configure Systemd Socket
 ~~~
-[root@freeipa ~]# cat /etc/systemd/system/tftp-server.socket
+$ vi /etc/systemd/system/tftp-server.socket
 [Unit]
 Description=Tftp Server Activation Socket
 
@@ -48,24 +45,28 @@ BindIPv6Only=both
 
 [Install]
 WantedBy=sockets.target
-
-[root@freeipa ~]# systemctl daemon-reload
-
-[root@freeipa ~]# systemctl enable tftp-server
-
-[root@freeipa ~]# systemctl start tftp-server
-
-[root@freeipa ~]# setsebool -P tftp_anon_write 1
-
-[root@freeipa ~]# setsebool -P tftp_home_dir 1
 ~~~
 
+- Enable and Start TFTP Server
+~~~
+$ systemctl daemon-reload
+$ systemctl enable tftp-server
+$ systemctl start tftp-server
+~~~
 
+- Enable SELinux Policy
+~~~
+$ setsebool -P tftp_anon_write 1
+$ setsebool -P tftp_home_dir 1
+~~~
+
+- Open TFTP in Firewalld
 ~~~
 $ firewall-cmd --permanent --zone public --add-port 69/udp
 $ firewall-cmd --permanent --zone public --add-port 69/tcp
 $ firewall-cmd --reload
 ~~~
+
 
 # Need to configure firewalld ruleset for dhcp,tftp,ftp and so on for specific devices in case of using bridge device for fedora 32
 
