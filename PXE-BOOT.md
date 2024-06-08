@@ -190,8 +190,8 @@ $  systemctl start nginx
 ~~~
 
 
-### Download Harvester ISO and PXE Boot Installation Kernel
-- Download Harvester ISO and Boot Kernel
+## Download and Configure Harvester ISO and Boot Kernel for PXE Boot Network Installation
+### Download Harvester ISO and Boot Kernel
 ~~~
 wget https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-amd64.iso
 wget https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-vmlinuz-amd64
@@ -199,21 +199,21 @@ wget https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-initrd-amd64
 wget https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-rootfs-amd64.squashfs
 ~~~
 
-- Locate Boot Kernel, Ramdisk and Rootfs into TFTP Root directory
+### Locate Boot Kernel, Ramdisk and Rootfs into TFTP Root directory
 ~~~
 $ mv /var/lib/tftpboot/Linux/Harvester/1.2/harvester-v1.2.1-vmlinuz-amd64
 $ mv /var/lib/tftpboot/Linux/Harvester/1.2/harvester-v1.2.1-initrd-amd64
 $ mv /var/lib/tftpboot/Linux/Harvester/1.2/harvester-v1.2.1-rootfs-amd64.squashfs
 ~~~
 
-- Locate ISO to FTP or HTTP Root Directory
+### Locate ISO to FTP or HTTP Root Directory
 ~~~
 $ mv /ftp-root/pub/Linux/Harvester/1.2/harvester-v1.2.1-amd64.iso
 or
 $ mv /ftp-root/harvester-v1.2.1-amd64.iso
 ~~~
 
-- Create directory for mounting Harvester ISO
+### Create directory for mounting Harvester ISO
 ~~~
 $ mkdir /mnt/harvester
 
@@ -231,7 +231,7 @@ drwxr-xr-x.  1 root root      2048 Dec 27  2022 EFI
 -rw-r--r--.  1 root root 601182208 Oct 26  2023 rootfs.squashfs
 ~~~
 
-- Configure Harvester Master Configuration for PXE Boot Installation
+### Configure Harvester Master Configuration for PXE Boot Installation
 ~~~
 $ vi /ftp-root/pub/Linux/Harvester/1.2/config-create.yaml
 
@@ -266,7 +266,7 @@ install:
   vip_mode: static        # Or dhcp, check configuration file for more information
 ~~~
 
-- Configure Harvester Worker Node Configuration for PXE Boot Installation
+### Configure Harvester Worker Node Configuration for PXE Boot Installation
 ~~~
 $ vi /ftp-root/pub/Linux/Harvester/1.2/config-join1.yaml
 
