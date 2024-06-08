@@ -232,7 +232,7 @@ drwxr-xr-x.  1 root root      2048 Dec 27  2022 EFI
 ~~~
 
 - Configure Harvester Master Configuration for PXE Boot Installation
-~~
+~~~
 $ vi /ftp-root/pub/Linux/Harvester/1.2/config-create.yaml
 
 scheme_version: 1
@@ -267,7 +267,7 @@ install:
 ~~~
 
 - Configure Harvester Worker Node Configuration for PXE Boot Installation
-~~
+~~~
 $ vi /ftp-root/pub/Linux/Harvester/1.2/config-join1.yaml
 
 scheme_version: 1
@@ -295,5 +295,5 @@ install:
     mtu: 1500
   device: /dev/sda # The target disk to install
   iso_url: http://192.168.0.90:81/pub/Linux/Harvester/1.2/harvester-v1.2.1-amd64.iso
-~~
+~~~
 
