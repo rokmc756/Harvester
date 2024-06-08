@@ -161,3 +161,32 @@ $  systemctl enable vsftpd
 $  systemctl start vsftpd
 ~~~
 
+### Configure NGINX Server
+- Configure Firewalld
+~~~
+$ firewall-cmd --permanent --zone public --add-service http
+$ firewall-cmd --reload
+~~
+
+- Install and Configure NGINIX
+~~
+$ dnf install nginx -y
+
+$ vi /etc/nginx/nginx.conf
+~~ snip
+    server {
+        listen       81;
+        listen       [::]:81;
+        server_name  _;
+        root         /ftp-root;
+        # root         /usr/share/nginx/html;
+~~ snip
+~~~
+
+- Enable and Start NGINX
+~~~
+$  systemctl enable nginx
+$  systemctl start nginx
+~~~
+
+
