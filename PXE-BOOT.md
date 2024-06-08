@@ -3,8 +3,11 @@
 ~~~
 OS : Rocky Linux 9.x
 IP : 192.168.0.90
-~~~
 
+Harvest Master : 192.168.0.191
+Harvest Fisrt Worker: 192.168.0.192
+Harvest Second Worker: 192.168.0.193
+~~~
 
 ### Install and Configure TFTP Server
 - Package Installation and Enable Services
@@ -231,7 +234,7 @@ drwxr-xr-x.  1 root root      2048 Dec 27  2022 EFI
 -rw-r--r--.  1 root root 601182208 Oct 26  2023 rootfs.squashfs
 ~~~
 
-- Configure Harvester Master Configuration for PXE Boot Installation
+- Configure Harvester Master Configuration
 ~~~
 $ vi /ftp-root/pub/Linux/Harvester/1.2/config-create.yaml
 
@@ -266,7 +269,7 @@ install:
   vip_mode: static        # Or dhcp, check configuration file for more information
 ~~~
 
-- Configure Harvester Worker Node Configuration for PXE Boot Installation
+- Configure Harvester First Worker Node Configuration
 ~~~
 $ vi /ftp-root/pub/Linux/Harvester/1.2/config-join1.yaml
 
@@ -296,4 +299,37 @@ install:
   device: /dev/sda # The target disk to install
   iso_url: http://192.168.0.90:81/pub/Linux/Harvester/1.2/harvester-v1.2.1-amd64.iso
 ~~~
+
+- Configure Harvester Second Worker Node Configuration
+~~~
+$ vi /ftp-root/pub/Linux/Harvester/1.2/config-join2.yaml
+
+scheme_version: 1
+server_url: https://192.168.0.190:443  # Should be the VIP set up in "CREATE" config
+token: token
+os:
+  hostname: sle15-hci-worker02
+  ssh_authorized_keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCs7IgHTyaH3vGo0BDll/67ke83+YiADSwv8KvkQ4eBEBgYb1MI2jbVPBUOdYhf5QIpKv+MYFMOyWk1fkEJoxzZjjFPJ5AMhZW+yvBM6kqBQF6uy5WJ/ijRN0sHlsmRUtlUUeKyv5hwTDnH2EfBm0eWa0xfLUurtZLWiCkoRtaVdA3uH7eHDgoA+zloDIugLbvzGfTmGD27OJTJhgPS4LpR4wL/wg2zrzKqVUe/AIQCfzHy2o3qlmBYOtyJEtoVSsnpysUKcXaGRtWhMmI8FQ5seuxeuNyjtbuKUnhBeps4wVNJ1IB+vGMZwUGMB5WMOX/er5+rKvWJvzRSyoMhPz9R84TRjWjcRnsW93fZvolABp+tg23U/ARwPa63h9UHZmvmv3e0x83Pc2vR2iKL+zcj8AZ0Jm3hAfGq1a30VDpOrR0hhYcLvpP4ZADRv227bcWlydVTRy0NYnAngREm1WVO+17TEqkOIXbwRexWmN729dXO8JkwGH5CGE1b+6xD9BM= jomoon@LAPTOP-OS28E8H5
+  password: changeme     # Replace with your password
+  dns_nameservers:
+    - 192.168.0.90
+    - 192.168.0.100
+    - 8.8.8.8
+install:
+  mode: join
+  management_interface: # available as of v1.1.0
+    interfaces:
+      - name: ens192
+    default_route: true
+    method: static
+    ip: 192.168.0.193
+    subnet_mask: 255.255.255.0
+    gateway: 192.168.0.1
+    mtu: 1500
+  device: /dev/sda # The target disk to install
+  iso_url: http://192.168.0.90:81/pub/Linux/Harvester/1.2/harvester-v1.2.1-amd64.iso
+~~~
+
+
 
