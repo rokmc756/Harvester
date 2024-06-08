@@ -1,4 +1,4 @@
-## How to configure TFTP, FTP, PXE boot for Harvester HCI Network Installation in VMware 8.x
+## How to configure TFTP, FTP, PXE boot for Harvester HCI PXE Boot Network Installation in VMware 8.x
 ### Environment
 ~~~
 OS : Rocky Linux 9.x
