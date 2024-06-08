@@ -64,31 +64,35 @@ $ setsebool -P tftp_home_dir 1
 ~~~
 $ firewall-cmd --permanent --zone public --add-port 69/udp
 $ firewall-cmd --permanent --zone public --add-port 69/tcp
+$ firewall-cmd --permanent --zone public --add-service tftp
 $ firewall-cmd --reload
 ~~~
 
-
-# Need to configure firewalld ruleset for dhcp,tftp,ftp and so on for specific devices in case of using bridge device for fedora 32
-
-# Need test
-# https://tecadmin.net/open-port-for-a-specific-network-in-firewalld/
+-  Need to configure firewalld ruleset for dhcp,tftp,ftp and so on for specific devices in case of using bridge device for fedora 32
+-  Need test : https://tecadmin.net/open-port-for-a-specific-network-in-firewalld/
 
 
-
+### Configure Syslinux
+- Package Installation
+~~~
+$ dnf install syslinux -y
 ~~~
 
-[root@freeipa ~]# firewall-cmd --permanent --zone public --add-service tftp
-[root@freeipa ~]# firewall-cmd --reload
-[root@freeipa ~]# dnf install syslinux -y
-[root@freeipa ~]# cp /usr/share/syslinux/menu.c32 /var/lib/tftpboot/
-[root@freeipa ~]# cp /usr/share/syslinux/pxelinux.0 /var/lib/tftpboot/
-[root@freeipa ~]# cp /usr/share/syslinux/ldlinux.c32 /var/lib/tftpboot/
-[root@freeipa ~]# cp /usr/share/syslinux/libutil.c32 /var/lib/tftpboot/
-[root@freeipa ~]# mkdir -p /var/lib/tftpboot/Linux/Weka/4.2
-[root@freeipa ~]# mkdir /var/lib/tftpboot/pxelinux.cfg
+- Copy PXE Boot Menu and Utils
+~~~
+$ cp /usr/share/syslinux/menu.c32 /var/lib/tftpboot/
+$ cp /usr/share/syslinux/pxelinux.0 /var/lib/tftpboot/
+$ cp /usr/share/syslinux/ldlinux.c32 /var/lib/tftpboot/
+$ cp /usr/share/syslinux/libutil.c32 /var/lib/tftpboot/
+~~~
+
+- Configure Boot Menu
+~~~
+$ mkdir -p /var/lib/tftpboot/Linux/Weka/4.2
+$ mkdir /var/lib/tftpboot/pxelinux.cfg
 
 
-[root@freeipa ~]# vi /var/lib/tftpboot/pxelinux.cfg/default
+$ vi /var/lib/tftpboot/pxelinux.cfg/default
 
 default menu.c32
 prompt 0
@@ -99,26 +103,38 @@ LABEL local
     MENU LABEL Boot Local Disk
     localboot 0
 
-LABEL Weka 4.2
-    MENU LABEL Weka 4.2 Kickstart Installation
-    KERNEL /Linux/Weka/4.2/vmlinuz
-    APPEND initrd=/Linux/Weka/4.2/initrd.img inst.repo=ftp://192.168.0.199/pub/Linux/Weka/4.2 inst.ks=ftp://192.168.0.199/pub/Linux/Weka/4.2/ks.cfg
+LABEL SuSE Harvester HCI Master
+    MENU LABEL SuSE Harvester HCI Master
+    KERNEL /Linux/Harvester/1.2/harvester-v1.2.1-vmlinuz-amd64
+    APPEND ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 initrd=/Linux/Harvester/1.2/harvester-v1.2.1-initrd-amd64 root=live:http://192.168.0.90:81/pub/Linux/Harvester/1.2/harvester-v1.2.1-rootfs-amd64.squashfs harvester.install.automatic=true harvester.install.config_url=http://192.168.0.90:81/pub/Linux/Harvester/1.2/config-create.yaml
+
+
+LABEL SuSE Harvester HCI Worker 1st
+    MENU LABEL SuSE Harvester HCI Worker 1st
+    KERNEL /Linux/Harvester/1.2/harvester-v1.2.1-vmlinuz-amd64
+    APPEND ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 initrd=/Linux/Harvester/1.2/harvester-v1.2.1-initrd-amd64 root=live:http://192.168.0.90:81/pub/Linux/Harvester/1.2/harvester-v1.2.1-rootfs-amd64.squashfs harvester.install.automatic=true harvester.install.config_url=http://192.168.0.90:81/pub/Linux/Harvester/1.2/config-join1.yaml
+
+
+LABEL SuSE Harvester HCI Worker 2nd
+    MENU LABEL SuSE Harvester HCI Worker 2nd
+    KERNEL /Linux/Harvester/1.2/harvester-v1.2.1-vmlinuz-amd64
+    APPEND ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 initrd=/Linux/Harvester/1.2/harvester-v1.2.1-initrd-amd64 root=live:http://192.168.0.90:81/pub/Linux/Harvester/1.2/harvester-v1.2.1-rootfs-amd64.squashfs harvester.install.automatic=true harvester.install.config_url=http://192.168.0.90:81/pub/Linux/Harvester/1.2/config-join2.yaml
 ~~~
 
 
 
-
-
-
-
-[ FTP Server ]
+### Configure FTP Server
+- Configure Firewalld
 ~~~
+$ firewall-cmd --permanent --zone public --add-service ftp
+$ firewall-cmd --reload
+~~
 
-[root@freeipa ~]# firewall-cmd --permanent --zone public --add-service ftp
-[root@freeipa ~]# firewall-cmd --reload
-[root@freeipa ~]# dnf install vsftpd -y
+- Install and Configure VSFTPd
+~~
+$ dnf install vsftpd -y
 
-[root@freeipa ~]# vi /etc/vsftpd/vsftpd.conf
+$ vi /etc/vsftpd/vsftpd.conf
 anonymous_enable=YES
 local_enable=NO
 write_enable=NO
@@ -137,10 +153,11 @@ no_anony_password=YES
 chroot_local_user=YES
 hide_ids=YES
 local_root=/ftp-root
-
-[root@freeipa ~]#  systemctl enable vsftpd
-
-[root@freeipa ~]#  systemctl start vsftpd
 ~~~
 
+- Enable and Start VSFTPd
+~~~
+$  systemctl enable vsftpd
+$  systemctl start vsftpd
+~~~
 
