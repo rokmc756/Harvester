@@ -1,3 +1,6 @@
+## How to deploy Harvester HCI by PXE Boot
+![alt text](https://github.com/rokmc756/Harvester/blob/main/PXE-BOOT.md)
+
 ## What is Harvester?
 Harvester is a modern hyperconverged infrastructure (HCI) solution built for bare metal servers using enterprise-grade open-source technologies
 including Linux, KVM, Kubernetes, KubeVirt, and Longhorn. Designed for users looking for a flexible and affordable solution to run cloud-native
@@ -40,7 +43,6 @@ Harvester is an enterprise-ready, easy-to-use infrastructure platform that lever
 
 ## Harvester Dashboard
 Harvester provides a powerful and easy-to-use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from the node's terminal.
-
 
 
 ## Relationship Between Harvester Cluster Network, Network Config, VM Network
