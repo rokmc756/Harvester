@@ -193,6 +193,36 @@ $  systemctl start nginx
 ~~~
 
 
+### Install and configure DHCP Server for PXE Boot
+- Package Installation and DHCP Configuraiton
+~~~
+$ dnf install dhcp-server -y
+
+$ vi /etc/dhcp/dhcpd.conf
+~~ snip
+dhcpd_interface = "eth0";
+subnet 192.168.0.0 netmask 255.255.255.0 {
+option routers 192.168.0.1;
+option subnet-mask 255.255.255.0;
+range dynamic-bootp 192.168.0.180 192.168.0.220;
+default-lease-time 3600;
+max-lease-time 7200;
+##### pxe setting #####
+allow booting;
+allow bootp;
+next-server 192.168.0.90;    # DHCP and PXE Server IP address should be specified
+filename "pxelinux.0";
+}
+~~~
+
+- Enable and Start DHCPd
+~~~
+$ systemctl enable dhcpd
+$ systemctl start dhcpd
+~~~
+
+
+
 ### Download and Configure Harvester ISO and Boot Kernel for PXE Boot Network Installation
 - Download Harvester ISO and Boot Kernel
 ~~~
@@ -232,6 +262,13 @@ drwxr-xr-x.  1 root root      2048 Oct 26  2023 bundle
 drwxr-xr-x.  1 root root      2048 Dec 27  2022 EFI
 -rw-r--r--.  1 root root       418 Oct 26  2023 harvester-release.yaml
 -rw-r--r--.  1 root root 601182208 Oct 26  2023 rootfs.squashfs
+~~~
+
+- Generate SSH Key for User Password
+~~~
+$ ssh-keygen
+$ cat ~/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC4TlnDdqDmpA1XQhoxCS45g0SOqQ1ryuCUkgqW8ISGFIFrF5SBfMa/75QhajR9L08a/SDvR1OL3fBfyogx97iZu0OGCZ95i0MYnZMFW97wsxraU8oXZyPVaFiOw823x5Wl+OYmm7lZLZK+LjNcK5agYtGCQjf0FVH6Gr9TKZCVi/RatK4E2VxUZUGWgtBhdzYPK4kvgNgEIUb5loIzAu1lC7Qpwhml6yS+vNkz+I/IiWFTYvv70+sKlZT3Gp1d/XrNULgWsh6Yix7Dr9IxYJH3L/q3INQnS85Kt9MAwZUHszvNM+ic3fmvE5NCl0Puk8feWECN4HPD1QiL5DV91NXH1X5jfxOJGl0axLY01LNGzwjBZ5P7hrEYiLak9esYQYnjPIsMuhBKItZaDaoZbfjTnfCyVsMjmZ6FNQ/72ScnqwK4aqMPKojglM8DN94sYcFnaz1nZilMe9/3wU6To+sFekI4dGVRfNrSllwfzjz26inSVnL2irtxUMP9FJHmnL0= jomoon@LAPTOP-OS28E8H5
 ~~~
 
 - Configure Harvester Master Configuration
