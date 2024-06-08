@@ -190,3 +190,110 @@ $  systemctl start nginx
 ~~~
 
 
+### Download Harvester ISO and PXE Boot Installation Kernel
+- Download Harvester ISO and Boot Kernel
+~~~
+wget https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-amd64.iso
+wget https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-vmlinuz-amd64
+wget https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-initrd-amd64
+wget https://releases.rancher.com/harvester/v1.2.1/harvester-v1.2.1-rootfs-amd64.squashfs
+~~~
+
+- Locate Boot Kernel, Ramdisk and Rootfs into TFTP Root directory
+~~~
+$ mv /var/lib/tftpboot/Linux/Harvester/1.2/harvester-v1.2.1-vmlinuz-amd64
+$ mv /var/lib/tftpboot/Linux/Harvester/1.2/harvester-v1.2.1-initrd-amd64
+$ mv /var/lib/tftpboot/Linux/Harvester/1.2/harvester-v1.2.1-rootfs-amd64.squashfs
+~~~
+
+- Locate ISO to FTP or HTTP Root Directory
+~~~
+$ mv /ftp-root/pub/Linux/Harvester/1.2/harvester-v1.2.1-amd64.iso
+or
+$ mv /ftp-root/harvester-v1.2.1-amd64.iso
+~~~
+
+- Create directory for mounting Harvester ISO
+~~~
+$ mkdir /mnt/harvester
+
+$ mount -o loop harvester-v1.2.1-amd64.iso /mnt/harvester/
+mount: /mnt/harvester: WARNING: source write-protected, mounted read-only.
+
+$ ls -al /mnt/harvester/
+total 587101
+drwxr-xr-x.  1 root root      2048 Oct 26  2023 .
+drwxr-xr-x. 10 root root       118 Apr 29 16:57 ..
+drwxr-xr-x.  1 root root      2048 Oct 26  2023 boot
+drwxr-xr-x.  1 root root      2048 Oct 26  2023 bundle
+drwxr-xr-x.  1 root root      2048 Dec 27  2022 EFI
+-rw-r--r--.  1 root root       418 Oct 26  2023 harvester-release.yaml
+-rw-r--r--.  1 root root 601182208 Oct 26  2023 rootfs.squashfs
+~~~
+
+- Configure Harvester Master Configuration for PXE Boot Installation
+~~
+$ vi /ftp-root/pub/Linux/Harvester/1.2/config-create.yaml
+
+scheme_version: 1
+token: token # Replace with a desired token
+os:
+  hostname: sle15-hci-master # Set a hostname. This can be omitted if DHCP server offers hostnames
+  ssh_authorized_keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCs7IgHTyaH3vGo0BDll/67ke83+YiADSwv8KvkQ4eBEBgYb1MI2jbVPBUOdYhf5QIpKv+MYFMOyWk1fkEJoxzZjjFPJ5AMhZW+yvBM6kqBQF6uy5WJ/ijRN0sHlsmRUtlUUeKyv5hwTDnH2EfBm0eWa0xfLUurtZLWiCkoRtaVdA3uH7eHDgoA+zloDIugLbvzGfTmGD27OJTJhgPS4LpR4wL/wg2zrzKqVUe/AIQCfzHy2o3qlmBYOtyJEtoVSsnpysUKcXaGRtWhMmI8FQ5seuxeuNyjtbuKUnhBeps4wVNJ1IB+vGMZwUGMB5WMOX/er5+rKvWJvzRSyoMhPz9R84TRjWjcRnsW93fZvolABp+tg23U/ARwPa63h9UHZmvmv3e0x83Pc2vR2iKL+zcj8AZ0Jm3hAfGq1a30VDpOrR0hhYcLvpP4ZADRv227bcWlydVTRy0NYnAngREm1WVO+17TEqkOIXbwRexWmN729dXO8JkwGH5CGE1b+6xD9BM= jomoon@LAPTOP-OS28E8H5
+  password: changeme     # Replace with your password
+  ntp_servers:
+    - 0.suse.pool.ntp.org
+    - 1.suse.pool.ntp.org
+  dns_nameservers:
+    - 192.168.0.90
+    - 8.8.8.8
+    - 168.126.63.1
+install:
+  mode: create
+  management_interface: # available as of v1.1.0
+    interfaces:
+      - name: ens192
+    default_route: true
+    method: static
+    ip: 192.168.0.191
+    subnet_mask: 255.255.255.0
+    gateway: 192.168.0.1
+    mtu: 1500
+  device: /dev/sda # The target disk to install
+  iso_url: http://192.168.0.90:81/pub/Linux/Harvester/1.2/harvester-v1.2.1-amd64.iso
+  vip: 192.168.0.190      # The VIP to access the Harvester GUI. Make sure the IP is free to use
+  vip_mode: static        # Or dhcp, check configuration file for more information
+~~~
+
+- Configure Harvester Worker Node Configuration for PXE Boot Installation
+~~
+$ vi /ftp-root/pub/Linux/Harvester/1.2/config-join1.yaml
+
+scheme_version: 1
+server_url: https://192.168.0.190:443  # Should be the VIP set up in "CREATE" config
+token: token
+os:
+  hostname: sle15-hci-worker01
+  ssh_authorized_keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCs7IgHTyaH3vGo0BDll/67ke83+YiADSwv8KvkQ4eBEBgYb1MI2jbVPBUOdYhf5QIpKv+MYFMOyWk1fkEJoxzZjjFPJ5AMhZW+yvBM6kqBQF6uy5WJ/ijRN0sHlsmRUtlUUeKyv5hwTDnH2EfBm0eWa0xfLUurtZLWiCkoRtaVdA3uH7eHDgoA+zloDIugLbvzGfTmGD27OJTJhgPS4LpR4wL/wg2zrzKqVUe/AIQCfzHy2o3qlmBYOtyJEtoVSsnpysUKcXaGRtWhMmI8FQ5seuxeuNyjtbuKUnhBeps4wVNJ1IB+vGMZwUGMB5WMOX/er5+rKvWJvzRSyoMhPz9R84TRjWjcRnsW93fZvolABp+tg23U/ARwPa63h9UHZmvmv3e0x83Pc2vR2iKL+zcj8AZ0Jm3hAfGq1a30VDpOrR0hhYcLvpP4ZADRv227bcWlydVTRy0NYnAngREm1WVO+17TEqkOIXbwRexWmN729dXO8JkwGH5CGE1b+6xD9BM= jomoon@LAPTOP-OS28E8H5
+  password: changeme       # Replace with your password
+  dns_nameservers:
+    - 192.168.0.90
+    - 192.168.0.100
+    - 8.8.8.8
+install:
+  mode: join
+  management_interface:    # available as of v1.1.0
+    interfaces:
+      - name: ens192
+    default_route: true
+    method: static
+    ip: 192.168.0.192
+    subnet_mask: 255.255.255.0
+    gateway: 192.168.0.1
+    mtu: 1500
+  device: /dev/sda # The target disk to install
+  iso_url: http://192.168.0.90:81/pub/Linux/Harvester/1.2/harvester-v1.2.1-amd64.iso
+~~
+
